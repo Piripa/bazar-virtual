@@ -1,8 +1,10 @@
 package br.com.engvini.bazar_virtual.vestimenta;
 
-public record VestimentaDTO(Long id, String nome, double preco, String image, Categoria categoria ){
+import java.util.UUID;
 
-    public VestimentaDTO(Vestimenta vestimenta){
+public record VestimentaResponseDTO(UUID id, String nome, int preco, String image, Categoria categoria ){
+
+    public VestimentaResponseDTO(Vestimenta vestimenta){
         this(vestimenta.getId(), vestimenta.getNome(), vestimenta.getPreco(), vestimenta.getImage(), vestimenta.getCategoria());
     }
 

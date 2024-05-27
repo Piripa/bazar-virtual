@@ -2,7 +2,8 @@ package br.com.engvini.bazar_virtual.controller;
 
 
 import br.com.engvini.bazar_virtual.vestimenta.Vestimenta;
-import br.com.engvini.bazar_virtual.vestimenta.VestimentaDTO;
+import br.com.engvini.bazar_virtual.vestimenta.VestimentaRequestDTO;
+import br.com.engvini.bazar_virtual.vestimenta.VestimentaResponseDTO;
 import br.com.engvini.bazar_virtual.vestimenta.VestimentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,14 @@ public class VestimentaController {
     private VestimentaRepository vestimentaRepository;
 
     @PostMapping
-    private ResponseEntity createVestimenta(@RequestBody VestimentaDTO data){
+    private ResponseEntity createVestimenta(@RequestBody VestimentaRequestDTO data){
         Vestimenta vestimenta = new Vestimenta(data);
         vestimentaRepository.save(vestimenta);
         return ResponseEntity.ok().build();
     }
     @GetMapping
-    private List<VestimentaDTO> getAllVestimentas(){
-        List<VestimentaDTO> allVestimentas = vestimentaRepository.findAll().stream().map(VestimentaDTO::new).toList();
+    private List<VestimentaResponseDTO> getAllVestimentas(){
+        List<VestimentaResponseDTO> allVestimentas = vestimentaRepository.findAll().stream().map(VestimentaResponseDTO::new).toList();
         return allVestimentas;
     }
 

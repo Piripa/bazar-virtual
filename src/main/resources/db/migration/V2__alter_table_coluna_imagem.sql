@@ -1,0 +1,1 @@
+ALTER TABLE vestimentas RENAME imagem TO image

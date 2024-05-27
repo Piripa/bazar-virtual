@@ -4,6 +4,8 @@ package br.com.engvini.bazar_virtual.vestimenta;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Table(name = "vestimentas")
 @Entity(name = "vestimentas")
 @Getter
@@ -13,20 +15,18 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 public class Vestimenta {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private long id;
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String nome;
 
-    private double preco;
+    private int preco;
 
     private String image;
 
     private Categoria categoria;
 
-    public Vestimenta(VestimentaDTO data){
-        this.id = data.id();
+    public Vestimenta(VestimentaRequestDTO data){
         this.nome = data.nome();
         this.preco = data.preco();
         this.image = data.image();
