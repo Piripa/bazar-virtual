@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/vestimenta")
@@ -28,6 +29,12 @@ public class VestimentaController {
     private List<VestimentaResponseDTO> getAllVestimentas(){
         List<VestimentaResponseDTO> allVestimentas = vestimentaRepository.findAll().stream().map(VestimentaResponseDTO::new).toList();
         return allVestimentas;
+    }
+    @DeleteMapping("/{id}")
+    private ResponseEntity deleteVestimenta(@PathVariable  UUID id){
+        Vestimenta vestimentaExcluir = vestimentaRepository.getReferenceById(id);
+        vestimentaRepository.delete(vestimentaExcluir);
+        return ResponseEntity.ok("Deletado com sucesso: " + vestimentaExcluir.getNome());
     }
 
 }

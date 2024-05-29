@@ -24,6 +24,7 @@ public class Vestimenta {
 
     private String image;
 
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     public Vestimenta(VestimentaRequestDTO data){
