@@ -1,4 +1,4 @@
-package br.com.engvini.bazar_virtual.vestimenta;
+package br.com.engvini.bazar_virtual.domain.vestimenta;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

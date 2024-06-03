@@ -1,8 +1,7 @@
-package br.com.engvini.bazar_virtual.usuario;
+package br.com.engvini.bazar_virtual.domain.usuario;
 
 
-import br.com.engvini.bazar_virtual.endereco.Endereco;
-import br.com.engvini.bazar_virtual.endereco.EnderecoDTO;
+import br.com.engvini.bazar_virtual.domain.endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +32,7 @@ public class Usuario {
     public Usuario(UsuarioRequestDTO data){
         this.nome = data.nome();
         this.email = data.email();
+        this.senha = data.senha();
         this.telefone = data.telefone();
         this.endereco = new Endereco(data.endereco());
     }

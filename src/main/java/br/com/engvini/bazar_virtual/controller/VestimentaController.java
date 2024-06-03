@@ -1,10 +1,10 @@
 package br.com.engvini.bazar_virtual.controller;
 
 
-import br.com.engvini.bazar_virtual.vestimenta.Vestimenta;
-import br.com.engvini.bazar_virtual.vestimenta.VestimentaRequestDTO;
-import br.com.engvini.bazar_virtual.vestimenta.VestimentaResponseDTO;
-import br.com.engvini.bazar_virtual.vestimenta.VestimentaRepository;
+import br.com.engvini.bazar_virtual.domain.vestimenta.Vestimenta;
+import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRequestDTO;
+import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaResponseDTO;
+import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

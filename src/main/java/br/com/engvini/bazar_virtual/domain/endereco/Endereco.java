@@ -1,4 +1,4 @@
-package br.com.engvini.bazar_virtual.endereco;
+package br.com.engvini.bazar_virtual.domain.endereco;
 
 
 import jakarta.persistence.Embeddable;
@@ -32,6 +32,7 @@ public class Endereco {
         this.logradouro = endereco.getLogradouro();
         this.numero = endereco.getNumero();
         this.complemento = endereco.getComplemento();
+        this.cidade = endereco.getCidade();
         this.bairro = endereco.getBairro();
         this.uf = endereco.getUf();
         this.cep = endereco.getCep();
