@@ -37,4 +37,21 @@ public class Usuario {
         this.endereco = new Endereco(data.endereco());
     }
 
+    public void atualizarInfo(AtualizarUsuario usuario) {
+        if(usuario.nome() != null){
+            this.setNome(usuario.nome());
+        }
+        if(usuario.email() != null){
+            this.setEmail(usuario.email());
+        }
+        if(usuario.senha() != null){
+            this.setSenha(usuario.senha());
+        }
+        if(usuario.telefone() != null){
+            this.setTelefone(usuario.telefone());
+        }
+        if(usuario.endereco() != null){
+            this.endereco.AtualizarEnd(usuario.endereco());
+        }
+    }
 }

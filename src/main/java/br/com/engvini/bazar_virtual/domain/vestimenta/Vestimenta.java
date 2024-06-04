@@ -33,6 +33,20 @@ public class Vestimenta {
         this.image = data.image();
         this.categoria = data.categoria();
     }
+    public void AtualizaVestimenta(AtualizarVestimenta data){
+        if(data.nome() != null){
+            this.nome = data.nome();
+        }
+        if(data.preco() != 0){
+            this.preco = data.preco();
+        }
+        if(data.image() != null){
+            this.image = data.image();
+        }
+        if(data.categoria() != null){
+            this.categoria = data.categoria();
+        }
+    }
 
 
 
