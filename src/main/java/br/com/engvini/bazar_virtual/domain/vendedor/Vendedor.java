@@ -19,9 +19,10 @@ public class Vendedor {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuariov_id")
     private Usuario usuario;
 
-    @OneToMany
+    @OneToMany(mappedBy = "vendedores",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Vestimenta> vestimenta;
 }

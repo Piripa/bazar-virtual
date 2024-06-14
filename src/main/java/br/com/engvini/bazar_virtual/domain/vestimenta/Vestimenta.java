@@ -1,6 +1,7 @@
 package br.com.engvini.bazar_virtual.domain.vestimenta;
 
 
+import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,10 @@ public class Vestimenta {
     private int preco;
 
     private String image;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendedor_id")
+    private Vendedor vendedores;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
