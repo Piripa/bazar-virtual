@@ -37,6 +37,7 @@ public class Usuario {
         this.endereco = new Endereco(data.endereco());
     }
 
+
     public void atualizarInfo(AtualizarUsuario usuario) {
         if(usuario.nome() != null){
             this.setNome(usuario.nome());

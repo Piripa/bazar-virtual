@@ -2,6 +2,7 @@ package br.com.engvini.bazar_virtual.controller;
 
 
 import br.com.engvini.bazar_virtual.domain.vestimenta.*;
+import br.com.engvini.bazar_virtual.service.VestimentaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,34 +16,32 @@ import java.util.UUID;
 public class VestimentaController {
 
     @Autowired
-    private VestimentaRepository vestimentaRepository;
+    private VestimentaService vestimentaService;
 
     @PostMapping
-    @Transactional
     public ResponseEntity createVestimenta(@RequestBody VestimentaRequestDTO data){
-        Vestimenta vestimenta = new Vestimenta(data);
-        vestimentaRepository.save(vestimenta);
-        return ResponseEntity.ok().build();
+        Vestimenta vestimenta = vestimentaService.createdVestimenta(data);
+        return ResponseEntity.ok(data);
     }
     @GetMapping
     public List<VestimentaResponseDTO> getAllVestimentas(){
-        List<VestimentaResponseDTO> allVestimentas = vestimentaRepository.findAll().stream().map(VestimentaResponseDTO::new).toList();
+        List<VestimentaResponseDTO> allVestimentas = vestimentaService.getAllVestimentas();
         return allVestimentas;
     }
+    @GetMapping("/{id}")
+    public VestimentaResponseDTO getVestimentaById(@PathVariable  UUID id) {
+        VestimentaResponseDTO vestimentaResponseDTO = vestimentaService.getVestimentaById(id);
+        return vestimentaResponseDTO;
+    }
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity deleteVestimenta(@PathVariable  UUID id){
-        Vestimenta vestimentaExcluir = vestimentaRepository.getReferenceById(id);
-        vestimentaRepository.delete(vestimentaExcluir);
-        return ResponseEntity.ok("Deletado com sucesso: " + vestimentaExcluir.getNome());
+       vestimentaService.deleteVestimenta(id);
+       return ResponseEntity.ok("Deletado com sucesso:");
     }
     @PutMapping
-    @Transactional
     public ResponseEntity updateVestimenta(@RequestBody AtualizarVestimenta data){
-        Vestimenta attVestimenta = vestimentaRepository.getReferenceById(data.id());
-        attVestimenta.AtualizaVestimenta(data);
-        vestimentaRepository.save(attVestimenta);
-        return ResponseEntity.ok(new VestimentaResponseDTO(attVestimenta));
+        VestimentaResponseDTO attVestimenta = vestimentaService.updateVestimenta(data);
+        return ResponseEntity.ok((attVestimenta));
     }
 
 }

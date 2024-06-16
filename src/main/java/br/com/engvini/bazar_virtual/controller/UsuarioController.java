@@ -1,11 +1,14 @@
 package br.com.engvini.bazar_virtual.controller;
 
 import br.com.engvini.bazar_virtual.domain.usuario.*;
+import br.com.engvini.bazar_virtual.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,38 +17,41 @@ import java.util.UUID;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @PostMapping
     @Transactional
-    public ResponseEntity salvarUser(@RequestBody UsuarioRequestDTO usuario) {
-        Usuario usuarioSalvo = new Usuario(usuario);
-        usuarioRepository.save(usuarioSalvo);
-        return ResponseEntity.ok("Usuário Salvo com sucesso");
+    public ResponseEntity createUser(@RequestBody UsuarioRequestDTO usuario, UriComponentsBuilder ucBuilder) {
+        Usuario user = usuarioService.createUser(usuario);
+        URI uri = ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
     @GetMapping
     public List<UsuarioResponseDTO>listUsers() {
-        List<UsuarioResponseDTO> usuarioResponseDTO = usuarioRepository.findAll().stream().map(UsuarioResponseDTO::new).toList();
+        List<UsuarioResponseDTO> usuarioResponseDTO = usuarioService.readUsers();
         return usuarioResponseDTO;
     }
 
+    @GetMapping("/{id}")
+    public UsuarioResponseDTO readUserById(@PathVariable Long id) {
+        UsuarioResponseDTO usuarioById = usuarioService.readUserById(id);
+        return usuarioById;
+    }
+
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity deleteUser(@PathVariable Long id){
-        Usuario usuario = usuarioRepository.getReferenceById(id);
-        usuarioRepository.delete(usuario);
-        return ResponseEntity.ok("Deletado " + usuario.getNome());
+        usuarioService.deleteUser(id);
+        return ResponseEntity.ok("Deleted user ");
     }
     @PutMapping()
-    @Transactional
     public ResponseEntity updateUser(@RequestBody AtualizarUsuario usuario) {
-        Usuario user = usuarioRepository.getReferenceById(usuario.id());
-        if(user != null) {
-            user.atualizarInfo(usuario);
-            usuarioRepository.save(user);
-        }
-        return ResponseEntity.ok(new UsuarioResponseDTO(user));
+        UsuarioResponseDTO user = usuarioService.updateUser(usuario);
+        return ResponseEntity.ok((user));
     }
 
 }
