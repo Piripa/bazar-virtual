@@ -14,7 +14,8 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    private UsuarioService (UsuarioRepository usuarioRepository) {
+
+    public UsuarioService (UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
