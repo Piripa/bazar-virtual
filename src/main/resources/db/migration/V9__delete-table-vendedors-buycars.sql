@@ -1,0 +1,3 @@
+DROP TABLE vendedores CASCADE  ;
+
+DROP TABLE buycars CASCADE ;
