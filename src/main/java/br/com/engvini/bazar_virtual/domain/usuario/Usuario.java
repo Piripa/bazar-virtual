@@ -2,10 +2,12 @@ package br.com.engvini.bazar_virtual.domain.usuario;
 
 
 import br.com.engvini.bazar_virtual.domain.endereco.Endereco;
+import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "usuarios")
 @Entity(name = "usuarios")
 @Getter
@@ -28,6 +30,7 @@ public class Usuario {
 
     @Embedded
     private Endereco endereco;
+
 
     public Usuario(UsuarioRequestDTO data){
         this.nome = data.nome();

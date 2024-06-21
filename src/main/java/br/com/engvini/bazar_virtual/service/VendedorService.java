@@ -10,6 +10,7 @@ import br.com.engvini.bazar_virtual.domain.vestimenta.Vestimenta;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRepository;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRequestDTO;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,39 +39,38 @@ public class VendedorService {
     }
 
     @Transactional
-    public Vendedor createVendedor(@RequestBody VendedorRequestDTO vendedorRequestDTO){
-        if(!usuarioRepository.existsById(vendedorRequestDTO.usuario_id())){
-            throw new RuntimeException("Usuário não encontrado");
+    public Vendedor createVendedor(@RequestBody @NotNull VendedorRequestDTO vendedorRequestDTO){
+        Usuario user = usuarioRepository.getReferenceById(vendedorRequestDTO.usuario_id());
+        Vestimenta vestimenta = vestimentaRepository.getReferenceById(vendedorRequestDTO.vestimentas());
+        if(user == null){
+            throw new NullPointerException("Usuário não encontrado");
         }
-        if(!(vestimentaRepository.existsById(vendedorRequestDTO.vestimentas()))){
-            throw new RuntimeException("Vestimenta não encontrada");
+        if(vestimenta == null){
+            throw new NullPointerException("Vestimenta não encontrada");
         }
 
-        Usuario user = usuarioRepository.getReferenceById(vendedorRequestDTO.usuario_id());
-        List<Vestimenta> vestimentaArrayList = vendedorRepository.getListVestimentaByIdVendedor(vendedorRequestDTO.usuario_id()).getVestimenta();
-        Vendedor vendedor = new Vendedor(user,vestimentaArrayList);
+        Vendedor vendedor = new Vendedor(user,vestimenta);
         vendedorRepository.save(vendedor);
         return vendedor;
-
-
-
     }
 
-//    public VendedorResponseDTO getVendedorById(String id){
-//        Vendedor vendedor = vendedorRepository.getReferenceById(id);
-//        return new VendedorResponseDTO();
-//    }
-//
-//    public List<VendedorResponseDTO> getListVendedor(){
-//        List<VendedorResponseDTO> vendedor = vendedorRepository.findAll().stream().map(VendedorResponseDTO::new).toList();
-//        return vendedor;
-//    }
+    @Transactional
+    public VendedorResponseDTO getVendedorById(Long id){
+        Vendedor vendedor = vendedorRepository.getReferenceById(id);
+        return new VendedorResponseDTO(vendedor);
+    }
+    @Transactional
+    public List<VendedorResponseDTO> getListVendedor(){
+        List<VendedorResponseDTO> vendedor = vendedorRepository.findAll().stream().map(VendedorResponseDTO::new).toList();
+        return vendedor;
+    }
 //
 //    public void UpdateVendedor(@RequestBody VendedorRequestDTO vendedorRequestDTO){
 //
 //    }
-//    public void deleteVendedor(String id){
-//        Vendedor vendedor = vendedorRepository.getReferenceById(id);
-//        vendedorRepository.delete(vendedor);
-//    }
+    @Transactional
+    public void deleteVendedor(Long id){
+        Vendedor vendedor = vendedorRepository.getReferenceById(id);
+        vendedorRepository.delete(vendedor);
+    }
 }

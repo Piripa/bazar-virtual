@@ -2,11 +2,13 @@ package br.com.engvini.bazar_virtual.domain.vestimenta;
 
 
 import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import java.util.UUID;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "vestimentas")
 @Entity(name = "vestimentas")
 @Getter
@@ -26,7 +28,7 @@ public class Vestimenta {
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendedor_id")
+    @JoinColumn(name = "vendedores_id")
     private Vendedor vendedores;
 
     @Enumerated(EnumType.STRING)
@@ -37,6 +39,7 @@ public class Vestimenta {
         this.preco = data.preco();
         this.image = data.image();
         this.categoria = data.categoria();
+        this.vendedores = data.vendedor();
     }
     public void AtualizaVestimenta(AtualizarVestimenta data){
         if(data.nome() != null){

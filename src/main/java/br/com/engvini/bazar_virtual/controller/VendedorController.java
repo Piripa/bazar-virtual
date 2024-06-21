@@ -24,10 +24,23 @@ public class VendedorController {
         return  ResponseEntity.ok(vendedor);
     }
 
-//    @GetMapping
-//    public List<VendedorResponseDTO> readVendedor(){
-//        List<VendedorResponseDTO> vendedorList = vendedorService.getListVendedor();
-//        return vendedorList;
-//    }
+    @GetMapping
+    public List<VendedorResponseDTO> readVendedor(){
+        List<VendedorResponseDTO> vendedorList = vendedorService.getListVendedor();
+        return vendedorList;
+    }
+
+    @GetMapping("/{id}")
+    public VendedorResponseDTO readVendedor(@PathVariable Long id){
+        VendedorResponseDTO vendedorResponseDTO = vendedorService.getVendedorById(id);
+        return vendedorResponseDTO;
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteVendedor(@PathVariable Long id){
+        vendedorService.deleteVendedor(id);
+        return ResponseEntity.ok().build();
+    }
 
 }
