@@ -2,6 +2,7 @@ package br.com.engvini.bazar_virtual.domain.vestimenta;
 
 
 import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,7 @@ public class Vestimenta {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendedores_id")
+    @JsonBackReference
     private Vendedor vendedores;
 
     @Enumerated(EnumType.STRING)

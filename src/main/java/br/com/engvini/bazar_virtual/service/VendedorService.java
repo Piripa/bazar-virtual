@@ -9,6 +9,7 @@ import br.com.engvini.bazar_virtual.domain.vendedor.VendedorResponseDTO;
 import br.com.engvini.bazar_virtual.domain.vestimenta.Vestimenta;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRepository;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRequestDTO;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @Service
 public class VendedorService {
+
 
     @Autowired
     private VendedorRepository vendedorRepository;
@@ -41,7 +43,7 @@ public class VendedorService {
     @Transactional
     public Vendedor createVendedor(@RequestBody @NotNull VendedorRequestDTO vendedorRequestDTO){
         Usuario user = usuarioRepository.getReferenceById(vendedorRequestDTO.usuario_id());
-        Vestimenta vestimenta = vestimentaRepository.getReferenceById(vendedorRequestDTO.vestimentas());
+        Vestimenta vestimenta = vestimentaRepository.getReferenceById(vendedorRequestDTO.vestimentas_id());
         if(user == null){
             throw new NullPointerException("Usuário não encontrado");
         }

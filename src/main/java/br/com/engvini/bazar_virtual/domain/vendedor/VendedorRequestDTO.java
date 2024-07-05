@@ -8,5 +8,5 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 
-public record VendedorRequestDTO(@NotNull Long usuario_id, @NotNull UUID vestimentas) {
+public record VendedorRequestDTO(@NotNull Long usuario_id, @NotNull UUID vestimentas_id) {
 }

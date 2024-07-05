@@ -2,6 +2,7 @@ package br.com.engvini.bazar_virtual.domain.vendedor;
 
 import br.com.engvini.bazar_virtual.domain.usuario.Usuario;
 import br.com.engvini.bazar_virtual.domain.vestimenta.Vestimenta;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,17 +25,18 @@ public class Vendedor {
     @JoinColumn(name = "usuariov_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "vendedores",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Vestimenta> vestimenta;
+    @OneToMany(mappedBy = "vendedores",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Vestimenta> vestimenta = new ArrayList<>();
 
     public Vendedor(Usuario usuario, Vestimenta vestimenta) {
         this.usuario = usuario;
-        if (this.vestimenta == null) {
-            this.vestimenta = new ArrayList<>();
-            this.vestimenta.add(vestimenta);
-        } else {
-            this.vestimenta.add(vestimenta);
-        }
+        this.AddVestimenta(vestimenta);
+
+    }
+    public void AddVestimenta(Vestimenta vestimenta) {
+        this.vestimenta.add(vestimenta);
+        vestimenta.setVendedores(this);
     }
 
 }
