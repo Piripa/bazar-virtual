@@ -1,4 +1,6 @@
 package br.com.engvini.bazar_virtual.domain.carrinhoCompras;
 
-public interface CarrinhoComprasRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CarrinhoComprasRepository extends JpaRepository<CarrinhoCompras, Long> {
 }

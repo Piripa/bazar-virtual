@@ -2,10 +2,7 @@ package br.com.engvini.bazar_virtual.service;
 
 import br.com.engvini.bazar_virtual.domain.usuario.Usuario;
 import br.com.engvini.bazar_virtual.domain.usuario.UsuarioRepository;
-import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
-import br.com.engvini.bazar_virtual.domain.vendedor.VendedorRepository;
-import br.com.engvini.bazar_virtual.domain.vendedor.VendedorRequestDTO;
-import br.com.engvini.bazar_virtual.domain.vendedor.VendedorResponseDTO;
+import br.com.engvini.bazar_virtual.domain.vendedor.*;
 import br.com.engvini.bazar_virtual.domain.vestimenta.Vestimenta;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRepository;
 import br.com.engvini.bazar_virtual.domain.vestimenta.VestimentaRequestDTO;
@@ -33,6 +30,9 @@ public class VendedorService {
 
     @Autowired
     private VestimentaRepository vestimentaRepository;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     public VendedorService(VendedorRepository vendedorRepository, UsuarioRepository usuarioRepository, VestimentaRepository vestimentaRepository) {
         this.vendedorRepository = vendedorRepository;
@@ -66,10 +66,16 @@ public class VendedorService {
         List<VendedorResponseDTO> vendedor = vendedorRepository.findAll().stream().map(VendedorResponseDTO::new).toList();
         return vendedor;
     }
-//
-//    public void UpdateVendedor(@RequestBody VendedorRequestDTO vendedorRequestDTO){
-//
-//    }
+
+    public VendedorResponseDTO UpdateVendedor(@RequestBody AtualizaVendedorDTO atualizaVendedorDTO){
+        Vendedor vendedor = vendedorRepository.getReferenceById(atualizaVendedorDTO.id());
+        if(atualizaVendedorDTO.user() != null){
+            usuarioService.updateUser(atualizaVendedorDTO.user());
+        }
+        vendedorRepository.save(vendedor);
+        return new VendedorResponseDTO(vendedor);
+
+    }
     @Transactional
     public void deleteVendedor(Long id){
         Vendedor vendedor = vendedorRepository.getReferenceById(id);

@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-
 import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "vestimentas")
@@ -28,7 +26,7 @@ public class Vestimenta {
 
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendedores_id")
     @JsonBackReference
     private Vendedor vendedores;
@@ -36,12 +34,12 @@ public class Vestimenta {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    public Vestimenta(VestimentaRequestDTO data){
-        this.nome = data.nome();
-        this.preco = data.preco();
-        this.image = data.image();
-        this.categoria = data.categoria();
-        this.vendedores = data.vendedor();
+    public Vestimenta(String nome, int preco, String image, Vendedor vendedores, Categoria categoria){
+        this.nome = nome;
+        this.preco = preco;
+        this.image = image;
+        this.categoria = categoria;
+        this.vendedores = vendedores;
     }
     public void AtualizaVestimenta(AtualizarVestimenta data){
         if(data.nome() != null){

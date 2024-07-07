@@ -1,6 +1,7 @@
 package br.com.engvini.bazar_virtual.controller;
 
 import br.com.engvini.bazar_virtual.domain.usuario.UsuarioRequestDTO;
+import br.com.engvini.bazar_virtual.domain.vendedor.AtualizaVendedorDTO;
 import br.com.engvini.bazar_virtual.domain.vendedor.Vendedor;
 import br.com.engvini.bazar_virtual.domain.vendedor.VendedorRequestDTO;
 import br.com.engvini.bazar_virtual.domain.vendedor.VendedorResponseDTO;
@@ -41,6 +42,12 @@ public class VendedorController {
     public ResponseEntity deleteVendedor(@PathVariable Long id){
         vendedorService.deleteVendedor(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<VendedorResponseDTO> updateVendedor(@RequestBody AtualizaVendedorDTO atualizaVendedorDTO){
+        VendedorResponseDTO vendedorResponseDTO = vendedorService.UpdateVendedor(atualizaVendedorDTO);
+        return ResponseEntity.ok(vendedorResponseDTO);
     }
 
 }

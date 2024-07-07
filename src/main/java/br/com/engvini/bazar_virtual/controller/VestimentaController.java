@@ -35,8 +35,7 @@ public class VestimentaController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteVestimenta(@PathVariable  UUID id){
-       vestimentaService.deleteVestimenta(id);
-       return ResponseEntity.ok("Deletado com sucesso:" + vestimentaService.getVestimentaById(id).nome());
+       return vestimentaService.deleteVestimenta(id);
     }
     @PutMapping
     public ResponseEntity updateVestimenta(@RequestBody AtualizarVestimenta data){
