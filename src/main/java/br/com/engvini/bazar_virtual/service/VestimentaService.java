@@ -40,7 +40,7 @@ public class VestimentaService {
         return new VestimentaResponseDTO(vestimenta);
 
     }
-    @Transactional
+
     public List<VestimentaResponseDTO> getAllVestimentas() {
         List<VestimentaResponseDTO> listVestimentas = vestimentaRepository.findAll().stream().map(VestimentaResponseDTO::new).toList();
         return listVestimentas;
