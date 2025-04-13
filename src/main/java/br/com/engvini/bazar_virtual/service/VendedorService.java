@@ -41,7 +41,7 @@ public class VendedorService {
     }
 
     @Transactional
-    public Vendedor createVendedor(@RequestBody @NotNull VendedorRequestDTO vendedorRequestDTO){
+    public Vendedor createVendedor( VendedorRequestDTO vendedorRequestDTO){
         Usuario user = usuarioRepository.getReferenceById(vendedorRequestDTO.usuario_id());
         Vestimenta vestimenta = vestimentaRepository.getReferenceById(vendedorRequestDTO.vestimentas_id());
         if(user == null){
